@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyHub | CBSE & NCERT</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fc;color:#172033}
+header{background:#172554;color:white;padding:22px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+header h1{margin:0;color:#93c5fd}
+nav a{color:white;text-decoration:none;margin:8px;font-weight:bold}
+.hero{padding:45px 6%;background:linear-gradient(120deg,#1d4ed8,#6d28d9);color:white}
+.hero h2{font-size:34px;margin:0 0 12px}
+.hero input{width:100%;max-width:550px;padding:14px;border:0;border-radius:9px;font-size:16px}
+main{padding:25px 6%}
+h2{color:#1e3a8a}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:13px}
+.card{background:white;padding:18px;border-radius:12px;box-shadow:0 3px 12px #00000010;cursor:pointer;border:2px solid transparent}
+.card:hover,.card.active{border-color:#2563eb}
+.card h3{margin:0 0 7px;color:#1d4ed8}
+button{background:#2563eb;color:white;border:0;padding:11px 16px;border-radius:8px;cursor:pointer;margin:5px}
+button:hover{background:#1e40af}
+.secondary{background:#475569}
+.panel{background:white;padding:22px;border-radius:12px;margin-top:20px;box-shadow:0 3px 12px #00000010}
+.panel h3{color:#1d4ed8}
+#lesson{line-height:1.7}
+.option{display:block;background:#eff6ff;padding:12px;margin:9px 0;border-radius:8px;cursor:pointer}
+.option input{margin-right:8px}
+a{color:#1d4ed8}
+footer{background:#172554;color:white;text-align:center;padding:25px;margin-top:35px}
+.small{color:#64748b;font-size:13px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>📚 StudyHub</h1>
+<nav>
+<a href="#classes">Classes</a>
+<a href="#resources">Books</a>
+<a href="#study">Study</a>
+</nav>
+</header>
+
+<section class="hero">
+<h2>Learn Better. Score Better.</h2>
+<p>CBSE and NCERT learning resources for Classes 5 to 12.</p>
+<input id="search" placeholder="Search a class, subject or topic..." oninput="searchItems()">
+</section>
+
+<main>
+<section id="classes">
+<h2>Choose Your Class</h2>
+<div class="grid" id="classGrid"></div>
+</section>
+
+<section id="study" class="panel">
+<h2 id="selectedTitle">Select a class to begin</h2>
+<p id="subjectHelp">Choose a class above to see its subjects.</p>
+<div class="grid" id="subjectGrid"></div>
+</section>
+
+<section class="panel">
+<h2 id="lessonTitle">Study Notes</h2>
+<div id="lesson">
+<p>Select a subject and then choose a topic to view notes.</p>
+</div>
+</section>
+
+<section class="panel">
+<h2>Practice Quiz</h2>
+<p>Test what you have learned.</p>
+<div id="quizArea">Choose a subject to load a practice quiz.</div>
+</section>
+
+<section id="resources" class="panel">
+<h2>Official Study Resources</h2>
+<p>Use these official websites to find textbooks and the latest syllabus.</p>
+<p>📘 <a href="https://ncert.nic.in/textbook.php" target="_blank" rel="noopener">NCERT Textbooks – Classes 1 to 12</a></p>
+<p>📖 <a href="https://epathshala.nic.in/" target="_blank" rel="noopener">NCERT ePathshala – eBooks and Resources</a></p>
+<p>🎓 <a href="https://cbseacademic.nic.in/curriculum_2027.html" target="_blank" rel="noopener">CBSE Curriculum 2026–27</a></p>
+<p class="small">Check your school's prescribed subjects and syllabus. Class 11 and 12 subject combinations differ between students.</p>
+</section>
+</main>
+
+<footer>
+<h3>StudyHub</h3>
+<p>Learn • Practise • Improve</p>
+<p>Independent educational project. Not an official NCERT or CBSE website.</p>
+</footer>
+
+<script>
+const subjects = {
+5:["Mathematics","Science","English","Hindi","Social Studies","Computer"],
+6:["Mathematics","Science","English","Hindi","Social Science","Computer"],
+7:["Mathematics","Science","English","Hindi","Social Science","Computer"],
+8:["Mathematics","Science","English","Hindi","Social Science","Computer"],
+9:["Mathematics","Science","English","Hindi","Social Science","Computer Applications"],
+10:["Mathematics","Science","English","Hindi","Social Science","Computer Applications"],
+11:["Physics","Chemistry","Mathematics","Biology","English","Accountancy","Economics","Business Studies","Computer Science"],
+12:["Physics","Chemistry","Mathematics","Biology","English","Accountancy","Economics","Business Studies","Computer Science"]
+};
+
+const notes = {
+"Mathematics":{
+title:"Mathematics – Basic Concepts",
+topics:[
+["Numbers and Operations","Numbers are used for counting, measuring and comparing. Addition combines quantities, subtraction finds the difference, multiplication represents repeated addition, and division shares quantities into equal groups."],
+["Fractions","A fraction represents part of a whole. The numerator tells how many parts are considered, while the denominator tells the total number of equal parts."],
+["Geometry","Geometry studies shapes, sizes, angles and positions. A triangle has three sides, while a quadrilateral has four sides."]
+]},
+"Science":{
+title:"Science – Basic Concepts",
+topics:[
+["Living and Non-living Things","Living things need energy, grow, respond to their surroundings and carry out life processes. Non-living things do not perform all these life processes."],
+["Matter","Matter is anything that has mass and occupies space. Common states of matter include solids, liquids and gases."],
+["Force and Motion","A force is a push or pull. It can change an object's speed, direction or shape."]
+]},
+"Physics":{
+title:"Physics – Introduction",
+topics:[
+["Motion","Motion is a change in the position of an object over time. Speed describes the distance travelled per unit of time."],
+["Force","Force is an interaction that can change the motion or shape of an object."],
+["Energy","Energy is the capacity to do work. Common forms include kinetic, potential, thermal and electrical energy."]
+]},
+"Chemistry":{
+title:"Chemistry – Introduction",
+topics:[
+["Atoms and Molecules","Atoms are basic units of elements. Molecules consist of two or more atoms chemically bonded together."],
+["Elements and Compounds","An element contains one kind of atom. A compound contains two or more elements chemically combined in a fixed proportion."],
+["Chemical Reactions","A chemical reaction transforms starting substances into new substances."]
+]},
+"Biology":{
+title:"Biology – Introduction",
+topics:[
+["Cells","The cell is the basic structural and functional unit of life."],
+["Photosynthesis","Green plants use light energy to prepare food from carbon dioxide and water, releasing oxygen."],
+["Human Body","The human body has organ systems that work together to perform essential life functions."]
+]},
+"English":{
+title:"English – Language Skills",
+topics:[
+["Grammar","Grammar explains how words are arranged to make meaningful sentences."],
+["Parts of Speech","Nouns name people, places or things. Verbs express actions or states. Adjectives describe nouns."],
+["Reading Comprehension","Read a passage carefully, identify its main idea and use evidence from the passage to answer questions."]
+]},
+"Hindi":{
+title:"Hindi – Language Skills",
+topics:[
+["व्याकरण","व्याकरण भाषा को शुद्ध रूप से बोलने और लिखने के नियम सिखाता है।"],
+["संज्ञा","किसी व्यक्ति, वस्तु, स्थान या भाव के नाम को संज्ञा कहते हैं।"],
+["वाक्य","शब्दों का ऐसा समूह जिससे पूरा अर्थ प्रकट हो, वाक्य कहलाता है।"]
+]},
+"Social Science":{
+title:"Social Science – Introduction",
+topics:[
+["History","History studies events, people and societies from the past."],
+["Geography","Geography studies the Earth, its physical features, climate and human activities."],
+["Civics","Civics helps us understand government, citizenship, rights and responsibilities."]
+]},
+"Social Studies":{
+title:"Social Studies – Introduction",
+topics:[
+["History","History studies events, people and societies from the past."],
+["Geography","Geography studies the Earth, its physical features, climate and human activities."],
+["Civics","Civics helps us understand government, citizenship, rights and responsibilities."]
+]},
+"Computer":{
+title:"Computer – Introduction",
+topics:[
+["Computer Basics","A computer accepts input, processes information, stores data and produces output."],
+["Hardware and Software","Hardware refers to physical computer components. Software consists of programs and instructions."],
+["Internet Safety","Use strong passwords, protect personal information and check information before trusting or sharing it."]
+]},
+"Computer Applications":{
+title:"Computer Applications – Introduction",
+topics:[
+["Computer Systems","A computer system combines hardware and software to process information."],
+["Programming","Programming means writing instructions that a computer can execute."],
+["Cyber Safety","Protect personal information and use trusted websites and applications."]
+]},
+"Accountancy":{
+title:"Accountancy – Introduction",
+topics:[
+["Accounting","Accounting records and communicates financial transactions."],
+["Assets and Liabilities","Assets are resources owned or controlled by a business. Liabilities are its obligations."],
+["Accounting Equation","The basic accounting equation is Assets = Liabilities + Capital."]
+]},
+"Economics":{
+title:"Economics – Introduction",
+topics:[
+["Scarcity","Scarcity exists because resources are limited while human wants are numerous."],
+["Demand","Demand describes the quantity of a good consumers are willing and able to buy at different prices."],
+["Supply","Supply describes the quantity producers are willing and able to sell at different prices."]
+]},
+"Business Studies":{
+title:"Business Studies – Introduction",
+topics:[
+["Business","Business involves economic activities related to producing or distributing goods and services."],
+["Management","Management involves planning, organising, staffing, directing and controlling resources."],
+["Entrepreneurship","Entrepreneurs identify opportunities and organise resources to develop a business."]
+]},
+"Computer Science":{
+title:"Computer Science – Introduction",
+topics:[
+["Algorithms","An algorithm is a finite sequence of clear steps for solving a problem."],
+["Programming","Programming uses a language to give instructions to a computer."],
+["Data","Data is information that can be collected, stored and processed."]
+]}
+};
+
+const quizzes = {
+"Mathematics":[
+["What is 12 × 5?","50","60","65","70",1],
+["What is 1/2 + 1/2?","1/2","1","2","1/4",1],
+["How many sides does a hexagon have?","5","6","7","8",1]
+],
+"Science":[
+["Which gas do plants absorb during photosynthesis?","Oxygen","Nitrogen","Carbon dioxide","Hydrogen",2],
+["What is the basic unit of life?","Tissue","Cell","Organ","Atom",1],
+["Which state of matter has a fixed volume but no fixed shape?","Solid","Liquid","Gas","None",1]
+],
+"Physics":[
+["What is the SI unit of force?","Joule","Newton","Watt","Pascal",1],
+["Which quantity is distance travelled per unit time?","Speed","Force","Energy","Mass",0],
+["Which form of energy is associated with motion?","Potential","Kinetic","Chemical","Nuclear",1]
+],
+"Chemistry":[
+["What is the chemical symbol for oxygen?","Ox","O","Oy","Om",1],
+["What is the smallest unit of an element?","Cell","Atom","Tissue","Mixture",1],
+["Water has which formula?","CO2","O2","H2O","NaCl",2]
+],
+"Biology":[
+["Which part of a plant usually absorbs water?","Flower","Root","Fruit","Leaf",1],
+["What is the basic unit of life?","Cell","Organ","Bone","Tissue",0],
+["Which process helps green plants make food?","Digestion","Photosynthesis","Respiration only","Evaporation",1]
+],
+"English":[
+["Which word is a noun?","Quickly","Beautiful","Teacher","Run",2],
+["Choose the past tense of 'go'.","Goed","Gone","Went","Going",2],
+["Which punctuation mark ends a question?","Full stop","Comma","Question mark","Colon",2]
+],
+"Hindi":[
+["'राम' किस प्रकार की संज्ञा है?","व्यक्तिवाचक","जातिवाचक","भाववाचक","समूहवाचक",0],
+["प्रश्न के अंत में कौन-सा चिह्न आता है?","।","?","! ",1],
+["'सुंदर' कौन-सा शब्द है?","संज्ञा","सर्वनाम","विशेषण","क्रिया",2]
+],
+"Social Science":[
+["Which planet do we live on?","Mars","Earth","Venus","Jupiter",1],
+["What does a map represent?","Only stories","An area of the Earth","Only numbers","A poem",1],
+["Which institution makes laws in India?","Parliament","Hospital","Bank","Post office",0]
+],
+"Social Studies":[
+["Which planet do we live on?","Mars","Earth","Venus","Jupiter",1],
+["What does a map represent?","Only stories","An area of the Earth","Only numbers","A poem",1],
+["Which institution makes laws in India?","Parliament","Hospital","Bank","Post office",0]
+],
+"Computer":[
+["Which device is used to type text?","Monitor","Keyboard","Speaker","Printer",1],
+["What does CPU stand for?","Central Processing Unit","Computer Personal Unit","Central Print Utility","Control Program User",0],
+["Which is used to browse websites?","Browser","Calculator","Paint","Notepad",0]
+]
+};
+
+let currentClass = 5;
+let currentSubject = "";
+let currentQuiz = [];
+let questionIndex = 0;
+let score = 0;
+
+const classGrid = document.getElementById("classGrid");
+
+for(let i=5;i<=12;i++){
+ const card=document.createElement("div");
+ card.className="card";
+ card.innerHTML=`<h3>Class ${i}</h3><p>CBSE & NCERT</p>`;
+ card.onclick=()=>selectClass(i);
+ classGrid.appendChild(card);
+}
+
+function selectClass(n){
+ currentClass=n;
+ document.getElementById("selectedTitle").textContent="Class "+n+" – Subjects";
+ document.getElementById("subjectHelp").textContent="Choose a subject to view notes and quizzes.";
+ const grid=document.getElementById("subjectGrid");
+ grid.innerHTML="";
+ subjects[n].forEach(s=>{
+  const c=document.createElement("div");
+  c.className="card";
+  c.innerHTML=`<h3>${s}</h3><p>Open study material</p>`;
+  c.onclick=()=>selectSubject(s);
+  grid.appendChild(c);
+ });
+ document.getElementById("lesson").innerHTML="<p>Now select a subject.</p>";
+ document.getElementById("quizArea").textContent="Choose a subject to load its quiz.";
+}
+
+function selectSubject(s){
+ currentSubject=s;
+ document.getElementById("lessonTitle").textContent=s+" – Class "+currentClass;
+ const area=document.getElementById("lesson");
+ const data=notes[s];
+ if(!data){
+  area.innerHTML=`<p>Original notes for ${s} are being prepared.</p><p>Use the official NCERT textbook and CBSE syllabus links below while this section is being developed.</p>`;
+ }else{
+  area.innerHTML=`<h3>${data.title}</h3>`;
+  data.topics.forEach((t,i)=>{
+   area.innerHTML+=`<h4>${i+1}. ${t[0]}</h4><p>${t[1]}</p>`;
+  });
+  area.innerHTML+=`<p class="small">These are original introductory notes, not a complete chapter or official NCERT content.</p>`;
+ }
+ loadQuiz(s);
+}
+
+function loadQuiz(s){
+ const area=document.getElementById("quizArea");
+ currentQuiz=quizzes[s]||[];
+ questionIndex=0;
+ score=0;
+ if(!currentQuiz.length){
+  area.innerHTML="<p>A quiz for this subject is being prepared.</p>";
+  return;
+ }
+ showQuestion();
+}
+
+function showQuestion(){
+ const area=document.getElementById("quizArea");
+ if(questionIndex>=currentQuiz.length){
+  area.innerHTML=`<h3>Quiz completed!</h3><p>Your score: ${score} / ${currentQuiz.length}</p><button onclick="loadQuiz(currentSubject)">Try Again</button>`;
+  return;
+ }
+ const q=currentQuiz[questionIndex];
+ let html=`<h3>Question ${questionIndex+1} of ${currentQuiz.length}</h3><p>${q[0]}</p>`;
+ for(let i=1;i<=4;i++){
+  html+=`<label class="option"><input type="radio" name="answer" value="${i-1}"> ${q[i]}</label>`;
+ }
+ html+=`<button onclick="checkAnswer()">Submit Answer</button>`;
+ area.innerHTML=html;
+}
+
+function checkAnswer(){
+ const selected=document.querySelector('input[name="answer"]:checked');
+ if(!selected){alert("Please select an answer.");return;}
+ const q=currentQuiz[questionIndex];
+ if(Number(selected.value)===q[5]){
+  score++;
+  alert("Correct answer!");
+ }else{
+  alert("Not quite. Correct answer: "+q[q[5]+1]);
+ }
+ questionIndex++;
+ showQuestion();
+}
+
+function searchItems(){
+ const term=document.getElementById("search").value.toLowerCase();
+ document.querySelectorAll(".card").forEach(c=>{
+  c.style.display=c.textContent.toLowerCase().includes(term)?"":"none";
+ });
+}
+</script>
+</body>
+</html>
